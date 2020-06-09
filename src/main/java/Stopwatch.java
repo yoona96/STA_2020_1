@@ -25,11 +25,13 @@ public class Stopwatch extends Function {
         stopwatch = new Time(2);
         stopwatch.setTime(0, 0, 0);
         stopwatch.setSecondListener(() -> {
-                    String time = stopwatch.getCurrentTime();
-                    StringTokenizer st = new StringTokenizer(time, " ");
-                    system.GUI.stopwatchView.setStopwatch(String.format("%02d", Integer.parseInt(st.nextToken()))
-                    + String.format("%02d", Integer.parseInt(st.nextToken())) +
-                            String.format("%02d", Integer.parseInt(st.nextToken())));
+                    if (system.GUI != null) {
+                        String time = stopwatch.getCurrentTime();
+                        StringTokenizer st = new StringTokenizer(time, " ");
+                        system.GUI.stopwatchView.setStopwatch(String.format("%02d", Integer.parseInt(st.nextToken()))
+                        + String.format("%02d", Integer.parseInt(st.nextToken())) +
+                                String.format("%02d", Integer.parseInt(st.nextToken())));
+                    }
                 }
                 );
         recordPointer = 0;

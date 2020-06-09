@@ -28,9 +28,12 @@ public class Timer extends Function {
             if (mode == 2) {
                 String str = timer.getCurrentTime();
                 StringTokenizer st = new StringTokenizer(str, " ");
-                system.GUI.timerView.setHour(String.format("%02d", Integer.parseInt(st.nextToken())));
-                system.GUI.timerView.setMinute(String.format("%02d", Integer.parseInt(st.nextToken())));
-                system.GUI.timerView.setSecond(String.format("%02d", Integer.parseInt(st.nextToken())));
+
+                if (system.GUI != null) {
+                    system.GUI.timerView.setHour(String.format("%02d", Integer.parseInt(st.nextToken())));
+                    system.GUI.timerView.setMinute(String.format("%02d", Integer.parseInt(st.nextToken())));
+                    system.GUI.timerView.setSecond(String.format("%02d", Integer.parseInt(st.nextToken())));
+                }
 
                 st = new StringTokenizer(str, " ");
                 if (st.nextToken().equals("0") && st.nextToken().equals("0") && st.nextToken().equals("0")) {

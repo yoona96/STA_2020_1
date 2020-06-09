@@ -6,7 +6,7 @@ public class Border {
     private boolean borderState;
 
     public Border(System system) {
-
+        borderState = false;
     }
 
     public boolean getBorderState() {

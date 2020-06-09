@@ -32,8 +32,6 @@ public class System extends Function {
     }
 
     public System() {
-        GUI = new GUI(this);
-
         functionNum = new int[4];
         Arrays.fill(functionNum, 0);
         functionNum[0] = 1;
@@ -1201,12 +1199,14 @@ public class System extends Function {
     public void startBorder() {
         border.startBorder();
         status |= 2;
-        drawTotalBorder();
+        if (GUI != null)
+            drawTotalBorder();
     }
 
     public void stopBorder() {
         border.stopBorder();
-        removeTotalBorder();
+        if (GUI != null)
+            removeTotalBorder();
     }
 
     public void beepBuzzer(int interval, int volume) {
@@ -1252,25 +1252,27 @@ public class System extends Function {
         functionNumIdx = (functionNumIdx + 1) % 4;
         selectedFid = functionNum[functionNumIdx];
 
-        switch (selectedFid) {
-            case 1:
-                GUI.setView(GUI.timekeepingView);
-                break;
-            case 2:
-                GUI.setView(GUI.stopwatchView);
-                break;
-            case 3:
-                GUI.setView(GUI.timerView);
-                break;
-            case 4:
-                GUI.setView(GUI.d_dayView);
-                break;
-            case 5:
-                GUI.setView(GUI.alarmView);
-                break;
-            case 6:
-                GUI.setView(GUI.alarmCustomView);
-                break;
+        if (GUI != null) {
+            switch (selectedFid) {
+                case 1:
+                    GUI.setView(GUI.timekeepingView);
+                    break;
+                case 2:
+                    GUI.setView(GUI.stopwatchView);
+                    break;
+                case 3:
+                    GUI.setView(GUI.timerView);
+                    break;
+                case 4:
+                    GUI.setView(GUI.d_dayView);
+                    break;
+                case 5:
+                    GUI.setView(GUI.alarmView);
+                    break;
+                case 6:
+                    GUI.setView(GUI.alarmCustomView);
+                    break;
+            }
         }
     }
 }

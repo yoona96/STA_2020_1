@@ -1,5 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-        new System();
+        System system = new System();
+        system.GUI = new GUI(system);
     }
 }

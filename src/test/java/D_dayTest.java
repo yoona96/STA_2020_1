@@ -45,8 +45,9 @@ public class D_dayTest {
     public void borderDdayTest() {
         D_day d_day = system.d_day;
 
+
         Date date = new Date();
-        date.setDate(2020, 6,9);
+        date.setDate(2020, 6,10);
         d_day.setDate(date);
         java.lang.System.out.println(d_day.getD_day());
 

@@ -44,17 +44,22 @@ public class TimeKeeping extends Function {
                     date.setDate(0, 0, 0);
                     system.d_day.setDate(date);
                     if (system.d_day.getD_day() == -1) {
-                        system.GUI.d_dayView.setYear("  ");
-                        system.GUI.d_dayView.setMonth("NO");
-                        system.GUI.d_dayView.setDate("NE");
+                        if (system.GUI != null) {
+                            system.GUI.d_dayView.setYear("  ");
+                            system.GUI.d_dayView.setMonth("NO");
+                            system.GUI.d_dayView.setDate("NE");
+                        }
                     } else {
                         String curDate = system.d_day.getD_dayDate().getCurrentDate();
                         StringTokenizer st = new StringTokenizer(curDate, " ");
-                        system.GUI.d_dayView.setYear(String.format("%02d", Integer.parseInt(st.nextToken()) % 100));
-                        system.GUI.d_dayView.setMonth(String.format("%02d", Integer.parseInt(st.nextToken())));
-                        system.GUI.d_dayView.setDate(String.format("%02d", Integer.parseInt(st.nextToken())));
+                        if (system.GUI != null) {
+                            system.GUI.d_dayView.setYear(String.format("%02d", Integer.parseInt(st.nextToken()) % 100));
+                            system.GUI.d_dayView.setMonth(String.format("%02d", Integer.parseInt(st.nextToken())));
+                            system.GUI.d_dayView.setDate(String.format("%02d", Integer.parseInt(st.nextToken())));
+                        }
                     }
-                    system.GUI.d_dayView.setDday("000");
+                    if (system.GUI != null)
+                        system.GUI.d_dayView.setDday("000");
                 }
             }
         });
@@ -63,37 +68,43 @@ public class TimeKeeping extends Function {
             if (mode == 0) {
                 String str = curTime.getCurrentTime();
                 StringTokenizer st = new StringTokenizer(str, " ");
-                system.GUI.timekeepingView.setCurTime1(String.format("%02d", Integer.parseInt(st.nextToken()))
-                        + String.format("%02d", Integer.parseInt(st.nextToken())));
-                system.GUI.timekeepingView.setCurTime2(String.format("%02d", Integer.parseInt(st.nextToken())));
-                system.GUI.timekeepingView.setDayofweek(DAY_OF_THE_WEEK[dayOfTheWeek - 1]);
-                str = curDate.getCurrentDate();
-                st = new StringTokenizer(str, " ");
-                system.GUI.timekeepingView.setDate(String.format("%02d", Integer.parseInt(st.nextToken().substring(2, 4)))
-                        + String.format("%02d", Integer.parseInt(st.nextToken()))
-                        + String.format("%02d", Integer.parseInt(st.nextToken())));
+                if (system.GUI != null) {
+                    system.GUI.timekeepingView.setCurTime1(String.format("%02d", Integer.parseInt(st.nextToken()))
+                            + String.format("%02d", Integer.parseInt(st.nextToken())));
+                    system.GUI.timekeepingView.setCurTime2(String.format("%02d", Integer.parseInt(st.nextToken())));
+                    system.GUI.timekeepingView.setDayofweek(DAY_OF_THE_WEEK[dayOfTheWeek - 1]);
+                    str = curDate.getCurrentDate();
+                    st = new StringTokenizer(str, " ");
+                    system.GUI.timekeepingView.setDate(String.format("%02d", Integer.parseInt(st.nextToken().substring(2, 4)))
+                            + String.format("%02d", Integer.parseInt(st.nextToken()))
+                            + String.format("%02d", Integer.parseInt(st.nextToken())));
+                }
 
                 // D-day
-                if (system.d_day != null) {
-                    int dDay = system.d_day.getD_day();
-                    if (dDay == -1)
-                        system.GUI.timekeepingView.setdDay("000");
-                    else {
-                        if (dDay > 999)
-                            system.GUI.timekeepingView.setdDay("999");
-                        else
-                            system.GUI.timekeepingView.setdDay(String.format("%03d", dDay));
+                if (system.GUI != null) {
+                    if (system.d_day != null) {
+                        int dDay = system.d_day.getD_day();
+                        if (dDay == -1)
+                            system.GUI.timekeepingView.setdDay("000");
+                        else {
+                            if (dDay > 999)
+                                system.GUI.timekeepingView.setdDay("999");
+                            else
+                                system.GUI.timekeepingView.setdDay(String.format("%03d", dDay));
+                        }
                     }
+                    else
+                        system.GUI.timekeepingView.setdDay("000");
                 }
-                else
-                    system.GUI.timekeepingView.setdDay("000");
 
                 // Alarm
-                if (system.alarm != null) {
-                    int alarmNum = system.alarm.getSize();
-                    system.GUI.timekeepingView.setAlarmNum(String.valueOf(alarmNum));
-                } else
-                    system.GUI.timekeepingView.setAlarmNum("0");
+                if (system.GUI != null) {
+                    if (system.alarm != null) {
+                        int alarmNum = system.alarm.getSize();
+                        system.GUI.timekeepingView.setAlarmNum(String.valueOf(alarmNum));
+                    } else
+                        system.GUI.timekeepingView.setAlarmNum("0");
+                }
 
             }
         });
