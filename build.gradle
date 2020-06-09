@@ -1,18 +1,12 @@
 plugins {
     id 'java'
-    id 'checkstyle'
-    id 'pmd'
 }
-
 group 'org.example'
 version '1.0-SNAPSHOT'
-
 sourceCompatibility = 1.8
-
 repositories {
     mavenCentral()
 }
-
 jar {
     manifest {
         attributes 'Main-Class': 'Main'
@@ -23,25 +17,10 @@ jar {
         }
     }
 }
-
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
-
 test {
     useJUnit()
     ignoreFailures = true
-}
-
-checkstyle {
-    toolVersion = "8.32"
-    ignoreFailures = true
-}
-
-pmd {
-    consoleOutput = true
-    ignoreFailures = true
-    toolVersion = "6.21.0"
-    rulePriority = 5
-    ruleSets = ["category/java/bestpractices.xml"]
 }

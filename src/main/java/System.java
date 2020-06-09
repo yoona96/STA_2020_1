@@ -863,7 +863,7 @@ public class System extends Function {
                     }
 
                     GUI.alarmView.setAlarmList2(str[0] + str[1] + str[2]);
-//                    GUI.alarmCustomView.setAlarmList2(str[0] + str[1] + str[2]);
+                    GUI.alarmCustomView.setAlarmList2(str[0] + str[1] + str[2]);
                 }
                 break;
             case 6: // alarm custom
