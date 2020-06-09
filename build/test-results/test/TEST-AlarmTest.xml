@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="AlarmTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2020-06-09T10:40:34" hostname="DESKTOP-02B8RBL" time="10.09">
+  <properties/>
+  <testcase name="DeleteAlarmTest" classname="AlarmTest" time="0.001"/>
+  <testcase name="StopAlarmBuzzerTest" classname="AlarmTest" time="0.0"/>
+  <testcase name="ControlAlarmListTest" classname="AlarmTest" time="0.001"/>
+  <testcase name="SetAlarmTest" classname="AlarmTest" time="0.0"/>
+  <testcase name="BeepAlarmTest" classname="AlarmTest" time="0.011"/>
+  <system-out><![CDATA[23 59 59
+23 59 59
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
