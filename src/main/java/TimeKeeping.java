@@ -245,6 +245,14 @@ public class TimeKeeping extends Function {
     public int getD_day() { return d_day; }
     public int getDayOfTheWeek() { return dayOfTheWeek; }
 
+    public void setCurTime(Time curTime) {
+        this.curTime = curTime;
+    }
+
+    public void setCurDate(Date curDate) {
+        this.curDate = curDate;
+    }
+
     public void cancel() {
         changeMode(-1);
     }

@@ -43,29 +43,31 @@ public class D_dayTest {
 
     @Test
     public void borderDdayTest() {
-        D_day d_day = system.d_day;
+        // 현재 날짜 저장
+        Date curDate = new Date();
+        curDate.setDate(system.timeKeeping.getCurDate().getYear(),
+                system.timeKeeping.getCurDate().getMonth(),
+                system.timeKeeping.getCurDate().getDay());
 
+        // d-day 설정: 현재 날짜 + 1
+        system.timeKeeping.getCurDate().raiseDate();
+        system.timeKeeping.setDayOfTheWeek();
+        system.d_day.requestDdaySettingMode();
+        system.d_day.setDate(system.timeKeeping.getCurDate());
 
-        Date date = new Date();
-        date.setDate(2020, 6,10);
-        d_day.setDate(date);
-        java.lang.System.out.println(d_day.getD_day());
+        // 다시 현재로 날짜를 설정하고 하루를 증가 시킴.
+        system.timeKeeping.setCurDate(curDate);
+        system.timeKeeping.getCurDate().raiseDate();
+        system.timeKeeping.setDayOfTheWeek();
 
-        system.timeKeeping.getCurTime().setTime(23, 59, 59);
-
-        try {
-            Thread.sleep(2000); // 1초가 흐른게 되네요
-        } catch(InterruptedException e) {
-            java.lang.System.out.println(e.getMessage());
-        }
+        if (system.d_day.getD_dayDate().getCurrentDate().equals(system.timeKeeping.getCurDate().getCurrentDate()))
+            system.startBorder();
 
         assertTrue(system.border.getBorderState());
     }
 
     @Test
     public void stopDdayBorderTest() {
-        D_day d_day = system.d_day;
-
         system.startBorder();
         assertTrue(system.border.getBorderState());
 
@@ -91,8 +93,6 @@ public class D_dayTest {
         d_day.requestSave();
 
         d_day.requestDeleteDday();
-
-        java.lang.System.out.println(d_day.getD_dayDate().getCurrentDate());
 
         assert(d_day.getD_dayDate().getYear() == Integer.parseInt(splited[0]));
         assert(d_day.getD_dayDate().getMonth() == Integer.parseInt(splited[1]));
