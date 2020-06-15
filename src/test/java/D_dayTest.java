@@ -67,6 +67,18 @@ public class D_dayTest {
     }
 
     @Test
+    public void checkInputException() {
+        Date date = new Date();
+        date.setDate(2099, 2, 31);
+
+        int[] dsv = {date.getYear(), date.getMonth(), date.getDay()};
+        system.d_day.setDateSettingValue(dsv);
+        system.d_day.requestSave();
+
+        assertEquals(system.d_day.getD_day(), -1);
+    }
+
+    @Test
     public void stopDdayBorderTest() {
         system.startBorder();
         assertTrue(system.border.getBorderState());

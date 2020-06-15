@@ -97,6 +97,7 @@ public class Stopwatch extends Function {
     }
 
     public void requestRecordCheckMode() {
+        if(getSize() == 0) return;
         changeMode(2);
     }
 
@@ -107,6 +108,11 @@ public class Stopwatch extends Function {
     public void movePointer(int diff) {
         recordPointer+=diff;
 
+        if (recordPointer > 2 && stopwatchRecord[0 + recordPointer] == null) {
+            recordPointer -= 1;
+            return;
+        }
+
         if(recordPointer < STOPWATCH_BOTTOM_LIMIT)
             recordPointer = STOPWATCH_BOTTOM_LIMIT;
         else if(recordPointer > STOPWATCH_TOP_LIMIT)
@@ -115,10 +121,18 @@ public class Stopwatch extends Function {
 
     public void cancel() {
         changeMode(0);
+        type = 0;
     }
 
     public void changeMode(int mode) {
         this.mode = mode;
+
+        if(this.mode == 0) {
+            recordPointer = 0;
+        }
+        else {
+
+        }
     }
 
     public void changeValue(int diff) {
@@ -145,12 +159,18 @@ public class Stopwatch extends Function {
         }
     }
 
-    /**
-     * 
-     */
     public void changeType() { type = (type + 1) % TYPE_SIZE; }
 
     public int getMode() {
         return this.mode;
+    }
+
+    public int getSize() {
+        int count=0;
+        for(int i=0; i<10; ++i) {
+            if(stopwatchRecord[i] == null) break;
+            count++;
+        }
+        return count;
     }
 }

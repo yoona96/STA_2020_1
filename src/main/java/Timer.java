@@ -134,5 +134,6 @@ public class Timer extends Function {
 
     public void cancel() {
         changeMode(0);
+        type = 0;
     }
 }

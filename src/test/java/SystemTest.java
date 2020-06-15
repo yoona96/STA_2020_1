@@ -58,7 +58,6 @@ public class SystemTest  {
         java.lang.System.out.println(system.getMode());
 
         // 알람
-
         int[] alarmFunction = {1, 3, 5, 6};
         system.setFunctionNum(alarmFunction);
         system.alarm = new Alarm(system);
@@ -136,5 +135,4 @@ public class SystemTest  {
         alarmCustom.cancel();
         assert(alarmCustom.getMode() == 0);
     }
-
 }

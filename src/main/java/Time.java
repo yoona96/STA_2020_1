@@ -33,7 +33,16 @@ class Time implements Runnable {
         return hour + " " + min + " " + sec;
     }
 
-    // TODO timeFlag가 시간을 증가시킬지, 감소시킬지를 의미하는 flag. Time 생성자에 필요할 듯
+
+    @Override
+    public boolean equals(Object t) {
+        Time time = (Time)t;
+        if (hour == time.hour && min == time.min && sec == time.sec)
+            return true;
+        return false;
+    }
+
+// TODO timeFlag가 시간을 증가시킬지, 감소시킬지를 의미하는 flag. Time 생성자에 필요할 듯
 
     public Time(int timeFlag) {
         SimpleDateFormat format = new SimpleDateFormat("HH mm ss");

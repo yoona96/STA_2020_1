@@ -38,28 +38,29 @@ public class TimeKeeping extends Function {
             setDayOfTheWeek();
 
             if(system.d_day.getD_day() != -1) {
+
+                system.d_day.setD_day(system.d_day.getD_day() - 1);
                 if(system.d_day.getD_dayDate().getCurrentDate().equals(curDate.getCurrentDate())) {
                     system.startBorder();
                     Date date = new Date();
                     date.setDate(0, 0, 0);
                     system.d_day.setDate(date);
-                    if (system.d_day.getD_day() == -1) {
-                        if (system.GUI != null) {
-                            system.GUI.d_dayView.setYear("  ");
-                            system.GUI.d_dayView.setMonth("NO");
-                            system.GUI.d_dayView.setDate("NE");
-                        }
-                    } else {
-                        String curDate = system.d_day.getD_dayDate().getCurrentDate();
-                        StringTokenizer st = new StringTokenizer(curDate, " ");
-                        if (system.GUI != null) {
-                            system.GUI.d_dayView.setYear(String.format("%02d", Integer.parseInt(st.nextToken()) % 100));
-                            system.GUI.d_dayView.setMonth(String.format("%02d", Integer.parseInt(st.nextToken())));
-                            system.GUI.d_dayView.setDate(String.format("%02d", Integer.parseInt(st.nextToken())));
-                        }
-                    }
-                    if (system.GUI != null)
+                    if (system.GUI != null) {
+                        system.GUI.d_dayView.setYear("  ");
+                        system.GUI.d_dayView.setMonth("NO");
+                        system.GUI.d_dayView.setDate("NE");
                         system.GUI.d_dayView.setDday("000");
+                    }
+                }
+                else {
+                    String curDate = system.d_day.getD_dayDate().getCurrentDate();
+                    StringTokenizer st = new StringTokenizer(curDate, " ");
+                    if (system.GUI != null) {
+                        system.GUI.d_dayView.setYear(String.format("%02d", Integer.parseInt(st.nextToken()) % 100));
+                        system.GUI.d_dayView.setMonth(String.format("%02d", Integer.parseInt(st.nextToken())));
+                        system.GUI.d_dayView.setDate(String.format("%02d", Integer.parseInt(st.nextToken())));
+                        system.GUI.d_dayView.setDday(String.format("%03d", system.d_day.getD_day()));
+                    }
                 }
             }
         });
@@ -98,14 +99,24 @@ public class TimeKeeping extends Function {
                 }
 
                 // Alarm
+                if (system.alarm == null)
+                    return;
+
+                int alarmNum = system.alarm.getSize();
+                AlarmData[] alarmList = system.alarm.getAlarmList();
+                for (int i = 0; i < alarmNum; i++) {
+                    if (curTime.equals(alarmList[i].getTime())) { // 선택된 알람 인터벌이랑 볼륨
+                        system.beepBuzzer(alarmList[i].getInterval(), alarmList[i].getVolume());
+                        break;
+                    }
+                }
+
                 if (system.GUI != null) {
                     if (system.alarm != null) {
-                        int alarmNum = system.alarm.getSize();
                         system.GUI.timekeepingView.setAlarmNum(String.valueOf(alarmNum));
                     } else
                         system.GUI.timekeepingView.setAlarmNum("0");
                 }
-
             }
         });
 
@@ -113,8 +124,20 @@ public class TimeKeeping extends Function {
         type = 0;
     }
 
+    public int getAlarmCnt() {
+        return alarmCnt;
+    }
+
     public void setAlarmCnt(int cnt) {
         this.alarmCnt = cnt;
+    }
+
+    public void setCurTime(Time curTime) {
+        this.curTime = curTime;
+    }
+
+    public void setCurDate(Date curDate) {
+        this.curDate = curDate;
     }
 
     public void changeMode(int _mode) {
@@ -178,10 +201,37 @@ public class TimeKeeping extends Function {
                     timeSettingValue[type] = curDate.MONTH_TOP_LIMIT;
                 break;
             case 5:
-                if (timeSettingValue[type] < curDate.numOfDays[0])
-                    timeSettingValue[type] = curDate.numOfDays[0];
-                else if (timeSettingValue[type] > curDate.numOfDays[timeSettingValue[4]])
-                    timeSettingValue[type] = curDate.numOfDays[timeSettingValue[4]];
+                if(timeSettingValue[4] == 2) {
+                    int temp, year = timeSettingValue[3];
+                    int tmpNumOfDay;
+                    temp = year % 4;
+                    if (temp == 0) {
+                        temp = year % 100;
+                        if (temp == 0) {
+                            temp = year % 400;
+                            if (temp == 0) {
+                                tmpNumOfDay = 29;
+                            }
+                            else
+                                tmpNumOfDay = 28;
+                        }
+                        else {
+                            tmpNumOfDay = 29;
+                        }
+                    } else
+                        tmpNumOfDay = 28;
+
+                    if(timeSettingValue[type] < curDate.numOfDays[0])
+                        timeSettingValue[type] = curDate.numOfDays[0];
+                    else if(timeSettingValue[type] > tmpNumOfDay)
+                        timeSettingValue[type] = tmpNumOfDay;
+                }
+                else {
+                    if(timeSettingValue[type] < curDate.numOfDays[0])
+                        timeSettingValue[type] = curDate.numOfDays[0];
+                    else if(timeSettingValue[type] > curDate.numOfDays[timeSettingValue[4]])
+                        timeSettingValue[type] = curDate.numOfDays[timeSettingValue[4]];
+                }
                 break;
         }
     }
@@ -200,11 +250,36 @@ public class TimeKeeping extends Function {
     }
 
     public void changeType() {
-        type = (type + 1) % TYPE_SIZE;
+            type = (type + 1) % TYPE_SIZE;
     }
 
     public void requestSave() {
-        if (timeSettingValue[5] > curDate.numOfDays[timeSettingValue[4]]) {
+        if (timeSettingValue[4] == 2) {
+            int temp, year = timeSettingValue[3];
+            int tmpNumOfDay;
+            temp = year % 4;
+            if (temp == 0) {
+                temp = year % 100;
+                if (temp == 0) {
+                    temp = year % 400;
+                    if (temp == 0) {
+                        tmpNumOfDay = 29;
+                    }
+                    else
+                        tmpNumOfDay = 28;
+                }
+                else {
+                    tmpNumOfDay = 29;
+                }
+            } else
+                tmpNumOfDay = 28;
+
+            if (timeSettingValue[5] > tmpNumOfDay) {
+                changeMode(-1);
+                return;
+            }
+        }
+        else if (timeSettingValue[5] > curDate.numOfDays[timeSettingValue[4]]) {
             changeMode(-1);
             return;
         }
@@ -245,15 +320,13 @@ public class TimeKeeping extends Function {
     public int getD_day() { return d_day; }
     public int getDayOfTheWeek() { return dayOfTheWeek; }
 
-    public void setCurTime(Time curTime) {
-        this.curTime = curTime;
-    }
 
-    public void setCurDate(Date curDate) {
-        this.curDate = curDate;
+    public void setD_day(int d_day) {
+        this.d_day = d_day;
     }
 
     public void cancel() {
         changeMode(-1);
+        type = 0;
     }
 }

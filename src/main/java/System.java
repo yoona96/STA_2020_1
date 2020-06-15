@@ -9,6 +9,7 @@ public class System extends Function {
 
     // 6�� �� 4�� �ν��Ͻ��� ��������.
     // �˶�, �˶�Ŀ������ �׻� �� �� ���Եǰų� ���Ե��� �ʾƾ� �Ѵ�.
+    final static int TIMED_OUT = 600_000;
     public GUI GUI;
     public TimeKeeping timeKeeping;
     public Stopwatch stopwatch;
@@ -18,7 +19,7 @@ public class System extends Function {
     public AlarmCustom alarmCustom;
     public Buzzer buzzer;
     public Border border;
-    private int functionNumIdx = 0;
+    private int functionNumIdx;
     private int[] functionNum;
     private int selectedFid;
     private int status; // ��Ʈ����ŷ: 0b00 0b01 0b10 0b11
@@ -41,6 +42,7 @@ public class System extends Function {
         status = 0b00;
         type = 1;
         selectedFid = 1;
+        functionNumIdx = 0;
 
         timeKeeping = new TimeKeeping(this);
         stopwatch = new Stopwatch(this);
@@ -54,7 +56,7 @@ public class System extends Function {
         cacheValue = new int[4];
         Arrays.fill(cacheValue, -1);
 
-        startCheckTimeOut();
+        lastOperateTime = java.lang.System.currentTimeMillis();
     }
 
     public int getStatus() { return this.status; }
@@ -65,50 +67,77 @@ public class System extends Function {
 
     public void startCheckTimeOut() {
         checkTimeOut = new Thread(() -> {
-            while(true) {
-                Function curFunction;
-                switch (functionNum[functionNumIdx]) {
-                    case 1:
-                        curFunction = timeKeeping;
-                        break;
-                    case 2:
-                        curFunction = stopwatch;
-                        break;
-                    case 3:
-                        curFunction = timer;
-                        break;
-                    case 4:
-                        curFunction = d_day;
-                        break;
-                    case 5:
-                        curFunction = alarm;
-                        break;
-                    case 6:
-                        curFunction = alarmCustom;
-                        break;
-                    default:
-                        curFunction = null;
-                }
-
+            while (true) {
                 try {
-                    Thread.sleep(10);
-                    if (curFunction.getMode() != 1 && this.getMode() != 1) continue;
+                    Thread.sleep(1000);
+                    if (java.lang.System.currentTimeMillis() - lastOperateTime >= TIMED_OUT) {
+                        lastOperateTime = java.lang.System.currentTimeMillis();
+                        switch (selectedFid) {
+                            case 1:
+                                if (timeKeeping.getMode() == 0 && mode == 1) {
+                                    this.cancel();
+                                    GUI.setView(GUI.timekeepingView);
+                                } else if (timeKeeping.getMode() == 1 && mode == 0) {
+                                    timeKeeping.cancel();
+                                    GUI.timekeepingView.borderPanel.setVisible(false);
+                                }
+                                break;
+                            case 2:
+                                if (stopwatch.getMode() == 2) {
+                                    stopwatch.cancel();
+                                    GUI.stopwatchView.borderPanel.setVisible(false);
+                                }
+                                break;
+                            case 3:
+                                if (timer.getMode() == 1) {
+                                    timer.cancel();
+                                    GUI.timerView.borderPanel.setVisible(false);
+                                    String tmp = timer.getTimer().getCurrentTime();
+                                    StringTokenizer st = new StringTokenizer(tmp, " ");
+                                    GUI.timerView.setHour(String.format("%02d", Integer.parseInt(st.nextToken())));
+                                    GUI.timerView.setMinute(String.format("%02d", Integer.parseInt(st.nextToken())));
+                                    GUI.timerView.setSecond(String.format("%02d", Integer.parseInt(st.nextToken())));
+                                }
+                                break;
+                            case 4:
+                                if (d_day.getMode() == 1) {
+                                    d_day.cancel();
+                                    GUI.d_dayView.borderPanel.setVisible(false);
+                                    if (d_day.getD_day() == -1) {
+                                        GUI.d_dayView.setYear("  ");
+                                        GUI.d_dayView.setMonth("NO");
+                                        GUI.d_dayView.setDate("NE");
+                                    } else {
+                                        String curDate = d_day.getD_dayDate().getCurrentDate();
+                                        StringTokenizer st = new StringTokenizer(curDate, " ");
+                                        GUI.d_dayView.setYear(String.format("%02d", Integer.parseInt(st.nextToken()) % 100));
+                                        GUI.d_dayView.setMonth(String.format("%02d", Integer.parseInt(st.nextToken())));
+                                        GUI.d_dayView.setDate(String.format("%02d", Integer.parseInt(st.nextToken())));
+                                    }
+                                }
+                                break;
+                            case 5:
+                                if (alarm.getMode() != 0) {
+                                    alarm.cancel();
+                                    GUI.alarmView.borderPanel.setVisible(false);
+                                }
+                                break;
+                            case 6:
+                                if (alarmCustom.getMode() != 0) {
+                                    alarmCustom.cancel();
+                                    GUI.alarmCustomView.borderPanel.setVisible(false);
+                                }
+                                break;
+                        }
+                        GUI.setView(GUI.timekeepingView);
+                        functionNumIdx = 0;
+                        selectedFid = 1;
+                    }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                while (curFunction.getMode() == 1 || this.getMode() == 1) {
-                    try {
-                        Thread.sleep(1000);
-                        if (java.lang.System.currentTimeMillis() - lastOperateTime >= 600000) {
-                            modeBtnLongPressed();
-                        }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
             }
         });
-
         checkTimeOut.start();
     }
 
@@ -144,18 +173,20 @@ public class System extends Function {
                 }
                 break;
             case 4: // dday
-                d_day.cancel();
-                GUI.d_dayView.borderPanel.setVisible(false);
-                if (d_day.getD_day() == -1) {
-                    GUI.d_dayView.setYear("  ");
-                    GUI.d_dayView.setMonth("NO");
-                    GUI.d_dayView.setDate("NE");
-                } else {
-                    String curDate = d_day.getD_dayDate().getCurrentDate();
-                    StringTokenizer st = new StringTokenizer(curDate, " ");
-                    GUI.d_dayView.setYear(String.format("%02d", Integer.parseInt(st.nextToken()) % 100));
-                    GUI.d_dayView.setMonth(String.format("%02d", Integer.parseInt(st.nextToken())));
-                    GUI.d_dayView.setDate(String.format("%02d", Integer.parseInt(st.nextToken())));
+                if (d_day.getMode() == 1) {
+                    d_day.cancel();
+                    GUI.d_dayView.borderPanel.setVisible(false);
+                    if (d_day.getD_day() == -1) {
+                        GUI.d_dayView.setYear("  ");
+                        GUI.d_dayView.setMonth("NO");
+                        GUI.d_dayView.setDate("NE");
+                    } else {
+                        String curDate = d_day.getD_dayDate().getCurrentDate();
+                        StringTokenizer st = new StringTokenizer(curDate, " ");
+                        GUI.d_dayView.setYear(String.format("%02d", Integer.parseInt(st.nextToken()) % 100));
+                        GUI.d_dayView.setMonth(String.format("%02d", Integer.parseInt(st.nextToken())));
+                        GUI.d_dayView.setDate(String.format("%02d", Integer.parseInt(st.nextToken())));
+                    }
                 }
                 break;
             case 5: // alarm
@@ -201,7 +232,8 @@ public class System extends Function {
             case 2: // ��ž��ġ
                 if (stopwatch.getMode() == 0) {
                     stopwatch.requestRecordCheckMode();
-                    GUI.stopwatchView.borderPanel.setVisible(true);
+                    if(stopwatch.getMode() == 2)
+                        GUI.stopwatchView.borderPanel.setVisible(true);
                 }
                 break;
             case 4: // d-day
@@ -276,10 +308,6 @@ public class System extends Function {
                     String[] tmp = stopwatch.getStopwatchRecord();
 
                     int curRecordPointer = stopwatch.getRecordPointer();
-                    if (curRecordPointer > 2 && tmp[0 + curRecordPointer] == null) {
-                        stopwatch.movePointer(-1);
-                        break;
-                    }
 
                     String[] str = new String[3];
                     if (tmp[0 + curRecordPointer] == null)
@@ -374,7 +402,7 @@ public class System extends Function {
                         // ������������ �ش��ϴ� ������ ����ָ� ��.
                         String str = "";
                         for (int i = segmentPointer[0]; i <= segmentPointer[1]; i++) {
-                            StringTokenizer st = new StringTokenizer(alarmList[i].getAlarmTime().getCurrentTime(), " ");
+                            StringTokenizer st = new StringTokenizer(alarmList[i].getTime().getCurrentTime(), " ");
                             while (st.hasMoreTokens()) {
                                 int tmp = Integer.parseInt(st.nextToken());
                                 str += String.format("%02d", tmp);
@@ -404,7 +432,7 @@ public class System extends Function {
                         // ������������ �ش��ϴ� ������ ����ָ� ��.
                         String str = "";
                         for (int i = segmentPointer[0]; i <= segmentPointer[1]; i++) {
-                            StringTokenizer st = new StringTokenizer(alarmList[i].getAlarmTime().getCurrentTime(), " ");
+                            StringTokenizer st = new StringTokenizer(alarmList[i].getTime().getCurrentTime(), " ");
                             while (st.hasMoreTokens()) {
                                 int tmp = Integer.parseInt(st.nextToken());
                                 str += String.format("%02d", tmp);
@@ -567,7 +595,7 @@ public class System extends Function {
 //                        java.lang.System.out.println("alarm pointer: " + alarmPointer);
                         String str = "";
                         for (int i = segmentPointer[0]; i <= segmentPointer[1]; i++) {
-                            StringTokenizer st = new StringTokenizer(alarmList[i].getAlarmTime().getCurrentTime(), " ");
+                            StringTokenizer st = new StringTokenizer(alarmList[i].getTime().getCurrentTime(), " ");
                             while (st.hasMoreTokens()) {
                                 int tmp = Integer.parseInt(st.nextToken());
                                 str += String.format("%02d", tmp);
@@ -601,7 +629,7 @@ public class System extends Function {
 //                        java.lang.System.out.println("alarm pointer: " + alarmPointer);
                         String str = "";
                         for (int i = segmentPointer[0]; i <= segmentPointer[1]; i++) {
-                            StringTokenizer st = new StringTokenizer(alarmList[i].getAlarmTime().getCurrentTime(), " ");
+                            StringTokenizer st = new StringTokenizer(alarmList[i].getTime().getCurrentTime(), " ");
                             while (st.hasMoreTokens()) {
                                 int tmp = Integer.parseInt(st.nextToken());
                                 str += String.format("%02d", tmp);
@@ -868,9 +896,8 @@ public class System extends Function {
                 alarmCustom.changeType();
                 if (alarmCustom.getMode() == 1) { // �˶� ����Ʈ ��ȸ ���
                     alarmCustom.requestIntervalSettingMode();
-
                     GUI.alarmCustomView.borderPanel.setBounds(
-                            550, 165, GUI.alarmCustomView._WIDTH, GUI.alarmCustomView._HEIGHT
+                        550, 165, GUI.alarmCustomView._WIDTH, GUI.alarmCustomView._HEIGHT
                     );
                     GUI.alarmCustomView.setAlarmInterval(Integer.toString(alarmCustom.getCustomSettingValue()[1]));
                     GUI.alarmCustomView.setAlarmVolume(Integer.toString(alarmCustom.getCustomSettingValue()[2]));
@@ -980,7 +1007,7 @@ public class System extends Function {
                     else
                         GUI.d_dayView.setDday(String.format("%03d", d_day.getD_day()));
                     nextFunction();
-                } else {
+                } else {    // mode 1
                     d_day.requestSave();
                     GUI.d_dayView.borderPanel.setVisible(false);
                     String curDate = d_day.getD_dayDate().getCurrentDate();
@@ -1063,6 +1090,7 @@ public class System extends Function {
 
     public void cancel() {
         changeMode(-1);
+        type = 1;
     }
 
     public void changeMode(int _mode) {

@@ -49,7 +49,7 @@ public class Alarm extends Function {
         else {
 
             for (int i = 0; i < size; i++) {
-                if (alarmList[i].getAlarmTime().equals(alarmTime))
+                if (alarmList[i].getTime().equals(alarmTime))
                     return;
             }
 
@@ -105,9 +105,15 @@ public class Alarm extends Function {
 
     public void requestAlarmSelectMode() {
         // TODO implement here
-        segmentPointer[0] = 0;
-        segmentPointer[1] = Math.min(2, getSize() - 1);
-        changeMode(2);
+        
+        if( getSize() == 0) {
+            return;
+        }
+        else {
+            segmentPointer[0] = 0;
+            segmentPointer[1] = Math.min(2, getSize() - 1);
+            changeMode(2);
+        }
     }
 
     public void setAlarmPointer(int alarmPointer) {
@@ -135,6 +141,8 @@ public class Alarm extends Function {
                 alarmSettingValue[i] = -1;
             typeindex = 0;
             alarmPointer = 0;
+            segmentPointer[0] = 0;
+            segmentPointer[1] = Math.max(2, getSize());
         }
     }
 

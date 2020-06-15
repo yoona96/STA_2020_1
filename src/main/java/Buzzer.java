@@ -21,7 +21,8 @@ public class Buzzer implements Runnable {
     }
 
     public final int INTERVALS[] = {500, 750, 1000};
-    public final double VOLUMES[] = {0, 0.03, 0.07};
+
+    public final double VOLUMES[] = {0, 0.5, 1.0, 2.0, 3.0};    // legend
 
     private int interval;
     private double volume;
@@ -39,7 +40,7 @@ public class Buzzer implements Runnable {
 
     public Buzzer() {
         interval = INTERVALS[1];
-        volume = VOLUMES[1];
+        volume = VOLUMES[2];
         buzzerState = false;
     }
 
@@ -57,13 +58,20 @@ public class Buzzer implements Runnable {
     }
 
     public void beepBuzzer(int interval, int volume) {
-        synchronized (lock) {
-            buzzerState = true;
-        }
         this.interval = INTERVALS[interval];
         this.volume = VOLUMES[volume];
-        beepThread = new Thread(this);
-        beepThread.start();
+
+        boolean nowBuzzerState;
+        synchronized (lock) {
+            nowBuzzerState  = buzzerState;
+        }
+        if(!nowBuzzerState) {
+            synchronized (lock) {
+                buzzerState = true;
+            }
+            beepThread = new Thread(this);
+            beepThread.start();
+        }
     }
 
     public void stopBuzzer() {
@@ -78,7 +86,7 @@ public class Buzzer implements Runnable {
             e.printStackTrace();
         }
         interval = INTERVALS[1];
-        volume = VOLUMES[1];
+        volume = VOLUMES[2];
     }
 
     public Thread getBeepThread() {

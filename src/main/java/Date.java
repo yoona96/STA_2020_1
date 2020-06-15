@@ -68,6 +68,7 @@ public class Date {
 
     public void raiseDate() {
         if(++day == numOfDays[month]) { day = 0; ++month; }
-        if(month > 12) { month = 0; ++year; }
+        if(month > MONTH_TOP_LIMIT) { month = 0; ++year; }
+        if(year > YEAR_TOP_LIMIT) { year = YEAR_TOP_LIMIT; month = MONTH_TOP_LIMIT; day = numOfDays[month]; }
     }
 }

@@ -26,6 +26,25 @@ public class TimerTest {
         assert(splitedTime[0].equals("1"));
         assert(splitedTime[1].equals("2"));
         assert(splitedTime[2].equals("3"));
+
+        // 경계값 확인
+
+        timer.requestTimerSettingMode();
+        for(int i = 0; i<2; i++) {
+            timer.changeValue(3000);
+            timer.changeType();
+        }
+        timer.changeValue(3000);
+        timer.requestSave();
+
+        time = timer.getTimer();
+
+        timeStr = time.getCurrentTime();
+        String splitedTime2[] = timeStr.split(" ");
+
+        assert(splitedTime2[0].equals("99"));
+        assert(splitedTime2[1].equals("59"));
+        assert(splitedTime2[2].equals("59"));
     }
 
     @Test
@@ -52,7 +71,6 @@ public class TimerTest {
         String splitedTime[] = timeStr.split(" ");
 
         assert(splitedTime[2].equals("2"));
-
     }
 
     @Test
@@ -95,6 +113,41 @@ public class TimerTest {
         String splitedTime[] = timeStr.split(" ");
 
         assert(splitedTime[2].equals("5"));
+
+        timer.requestResetTimer();
+
+        time = timer.getTimer();
+
+        timeStr = time.getCurrentTime();
+        splitedTime = timeStr.split(" ");
+
+        assert(splitedTime[0].equals("0"));
+        assert(splitedTime[1].equals("0"));
+        assert(splitedTime[2].equals("0"));
+
+        // pause 상태에서도 reset 되는지 확인
+        timer.requestTimerSettingMode();
+
+        timer.changeType();
+        timer.changeType();
+        timer.changeValue(5); // Timer를 5초로 Setting
+        timer.requestSave();
+
+        timer.requestStartTimer();
+
+        try {
+            Thread.sleep(1100); // 1초가 흐른게 되네요
+        } catch(InterruptedException e) {
+            java.lang.System.out.println(e.getMessage());
+        }
+
+        timer.requestPauseTimer();
+        time = timer.getTimer();
+
+        timeStr = time.getCurrentTime();
+        splitedTime = timeStr.split(" ");
+
+        assert(splitedTime[2].equals("4"));
 
         timer.requestResetTimer();
 

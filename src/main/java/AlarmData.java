@@ -23,13 +23,9 @@ public class AlarmData {
 
     public AlarmData() {
         alarmTime = new Time(2); // 증가도 감소도 아니라 의미 없게 2로 지정.
-        interval = 2;
+        interval = 1;
         volume = 2;
         alarmTime.setTime(-1,-1,-1);
-    }
-
-    public Time getAlarmTime() {
-        return alarmTime;
     }
 
     public Time getTime(){
