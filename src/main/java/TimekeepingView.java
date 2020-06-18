@@ -104,7 +104,15 @@ public class TimekeepingView extends DefaultLayout {
         add(borderPanel, new Integer(2));
     }
 
-    public void setAlarmNum(String str) { displaySegment(385, 200, ALARM_SIZE_WIDTH, ALARM_SIZE_HEIGHT, str, layer++); }
+    public void setAlarmNum(String str) {
+        if (str.equals("10")) {
+            add(new SegmentDisplay(385 + PADDING, 200 + PADDING,
+                    ALARM_SIZE_WIDTH - 2 * PADDING, ALARM_SIZE_HEIGHT - 2 * PADDING, 't')
+                    , new Integer(layer));
+        }
+        else
+            displaySegment(385, 200, ALARM_SIZE_WIDTH, ALARM_SIZE_HEIGHT, str, layer++);
+    }
 
     public void setdDay(String str) { displaySegment(420, 175, D_DAY_WIDTH, D_DAY_HEIGHT, str, layer++); }
 

@@ -11,10 +11,8 @@ public class AlarmCustom extends Function {
     private final int VOLUME_BOTTOM_LIMIT = 0;
     private int[] customSettingValue;
     private System system;
-    private int type;
 
     public AlarmCustom(System system) {
-        fid = 6;
         mode = 0;
         this.system = system;
         customSettingValue = new int[3];
@@ -58,6 +56,7 @@ public class AlarmCustom extends Function {
         changeMode(0);
     }
 
+    @Override
     public void changeMode(int mode) {
         if (mode == 1){
             if ((ALARM_TOP_LIMIT = system.alarm.getSize()) == 0) {

@@ -1,31 +1,26 @@
-
-/**
- * @author Yoonseop Shin
- */
 public class Alarm extends Function {
 
     final static int FID = 5;
 
-    public Alarm(System system) {
-        fid = 5;
+    public Alarm() {
         curAlarm = new AlarmData();
         alarmList = new AlarmData[10];
         for(int i=0; i<10; ++i)
             alarmList[i] = null;
         mode = 0; // 기본 모드
         segmentPointer = new int[2];
-        typeindex = 0;
-        this.system = system;
+        type = 0;
+    }
+
+    public Alarm(System system) {
+        this();
     }
 
     private AlarmData curAlarm;
     private AlarmData[] alarmList;
     private int alarmPointer;
     private int[] segmentPointer;
-    private int mode;
-    private int typeindex; // 시분초 구분
     private int alarmSettingValue[] = {-1,-1,-1};
-    private System system;
 
     public int[] getAlarmSettingValue() {
        return this.alarmSettingValue;
@@ -45,9 +40,7 @@ public class Alarm extends Function {
 
     public void addTimeToAlarmList(Time alarmTime) {
         int size = getSize();
-        if (size >= 10) {}// 꽉 찼으니 저장 안함.
-        else {
-
+        if (size < 10) {
             for (int i = 0; i < size; i++) {
                 if (alarmList[i].getTime().equals(alarmTime))
                     return;
@@ -124,6 +117,7 @@ public class Alarm extends Function {
         changeMode(0);
     }
 
+    @Override
     public void changeMode(int mode) { // 기본 화면, 알람 리스트 확인, 알람 설정 이렇게 3개가 있음.
         this.mode = mode;
         if(this.mode == 1) // 알람 설정
@@ -139,7 +133,7 @@ public class Alarm extends Function {
             // alarmSettingValue -1로 비활성화
             for(int i=0; i< 3; ++i)
                 alarmSettingValue[i] = -1;
-            typeindex = 0;
+            type = 0;
             alarmPointer = 0;
             segmentPointer[0] = 0;
             segmentPointer[1] = Math.max(2, getSize());
@@ -174,34 +168,34 @@ public class Alarm extends Function {
 
 
     public void changeValue(int diff) {
-        alarmSettingValue[typeindex] += diff;
+        alarmSettingValue[type] += diff;
 
         // 각 type 값 검사
-        switch(typeindex) {
+        switch(type) {
             case 0 :
-                if(alarmSettingValue[typeindex] < curAlarm.getTime().TIME_BOTTOM_LIMIT)
-                    alarmSettingValue[typeindex] = curAlarm.getTime().TIME_BOTTOM_LIMIT;
-                else if(alarmSettingValue[typeindex] > curAlarm.getTime().HOUR_TOP_LIMIT)
-                    alarmSettingValue[typeindex] = curAlarm.getTime().HOUR_TOP_LIMIT;
+                if(alarmSettingValue[type] < curAlarm.getTime().TIME_BOTTOM_LIMIT)
+                    alarmSettingValue[type] = curAlarm.getTime().TIME_BOTTOM_LIMIT;
+                else if(alarmSettingValue[type] > curAlarm.getTime().HOUR_TOP_LIMIT)
+                    alarmSettingValue[type] = curAlarm.getTime().HOUR_TOP_LIMIT;
                 break;
             case 1 :
-                if(alarmSettingValue[typeindex] < curAlarm.getTime().TIME_BOTTOM_LIMIT)
-                    alarmSettingValue[typeindex] = curAlarm.getTime().TIME_BOTTOM_LIMIT;
-                else if(alarmSettingValue[typeindex] > curAlarm.getTime().MINUTE_TOP_LIMIT)
-                    alarmSettingValue[typeindex] = curAlarm.getTime().MINUTE_TOP_LIMIT;
+                if(alarmSettingValue[type] < curAlarm.getTime().TIME_BOTTOM_LIMIT)
+                    alarmSettingValue[type] = curAlarm.getTime().TIME_BOTTOM_LIMIT;
+                else if(alarmSettingValue[type] > curAlarm.getTime().MINUTE_TOP_LIMIT)
+                    alarmSettingValue[type] = curAlarm.getTime().MINUTE_TOP_LIMIT;
                 break;
             case 2 :
-                if(alarmSettingValue[typeindex] < curAlarm.getTime().TIME_BOTTOM_LIMIT)
-                    alarmSettingValue[typeindex] = curAlarm.getTime().TIME_BOTTOM_LIMIT;
-                else if(alarmSettingValue[typeindex] > curAlarm.getTime().SECOND_TOP_LIMIT)
-                    alarmSettingValue[typeindex] = curAlarm.getTime().SECOND_TOP_LIMIT;
+                if(alarmSettingValue[type] < curAlarm.getTime().TIME_BOTTOM_LIMIT)
+                    alarmSettingValue[type] = curAlarm.getTime().TIME_BOTTOM_LIMIT;
+                else if(alarmSettingValue[type] > curAlarm.getTime().SECOND_TOP_LIMIT)
+                    alarmSettingValue[type] = curAlarm.getTime().SECOND_TOP_LIMIT;
                 break;
 
         }
     }
 
     public void changeType() {
-        typeindex = (typeindex + 1) % 3; // 시(0), 분(1), 초(2) 타입 변경.
+        type = (type + 1) % 3; // 시(0), 분(1), 초(2) 타입 변경.
     }
 
     public int getMode() {
@@ -209,7 +203,7 @@ public class Alarm extends Function {
     }
 
     public int getType() {
-        return typeindex;
+        return type;
     }
 
     public int getSize() {

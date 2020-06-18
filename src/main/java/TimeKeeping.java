@@ -11,19 +11,16 @@ public class TimeKeeping extends Function {
     private final int TYPE_SIZE = 6;
 
     // 0 -> Default Mode, 1 -> TimeSettingMode
-    private int mode;
     private Time curTime;
     private Date curDate;
     private int d_day;
     private int alarmCnt;
     private int dayOfTheWeek; // 1 : 일요일 7 : 토요일
-    private int type;
 
     // TimeSettingMode일 때, 사용자가 변화시키는 값을 임시 저장하는 배열
     private int timeSettingValue[] = {-1, -1, -1, -1, -1, -1};
 
     public TimeKeeping(System system) {
-        fid = 1;
         d_day = -1;
         alarmCnt = 0;
         mode = 0;
@@ -99,8 +96,12 @@ public class TimeKeeping extends Function {
                 }
 
                 // Alarm
-                if (system.alarm == null)
+                if (system.alarm == null) {
+                    if (system.GUI != null) {
+                        system.GUI.timekeepingView.setAlarmNum(" ");
+                    }
                     return;
+                }
 
                 int alarmNum = system.alarm.getSize();
                 AlarmData[] alarmList = system.alarm.getAlarmList();
@@ -112,10 +113,10 @@ public class TimeKeeping extends Function {
                 }
 
                 if (system.GUI != null) {
-                    if (system.alarm != null) {
+                    if (system.alarm != null)
                         system.GUI.timekeepingView.setAlarmNum(String.valueOf(alarmNum));
-                    } else
-                        system.GUI.timekeepingView.setAlarmNum("0");
+                    else
+                        system.GUI.timekeepingView.setAlarmNum(" ");
                 }
             }
         });
@@ -140,6 +141,7 @@ public class TimeKeeping extends Function {
         this.curDate = curDate;
     }
 
+    @Override
     public void changeMode(int _mode) {
         mode ^= 1;
 
@@ -221,16 +223,16 @@ public class TimeKeeping extends Function {
                     } else
                         tmpNumOfDay = 28;
 
-                    if(timeSettingValue[type] < curDate.numOfDays[0])
-                        timeSettingValue[type] = curDate.numOfDays[0];
+                    if(timeSettingValue[type] < Date.numOfDays[0])
+                        timeSettingValue[type] = Date.numOfDays[0];
                     else if(timeSettingValue[type] > tmpNumOfDay)
                         timeSettingValue[type] = tmpNumOfDay;
                 }
                 else {
-                    if(timeSettingValue[type] < curDate.numOfDays[0])
-                        timeSettingValue[type] = curDate.numOfDays[0];
-                    else if(timeSettingValue[type] > curDate.numOfDays[timeSettingValue[4]])
-                        timeSettingValue[type] = curDate.numOfDays[timeSettingValue[4]];
+                    if(timeSettingValue[type] < Date.numOfDays[0])
+                        timeSettingValue[type] = Date.numOfDays[0];
+                    else if(timeSettingValue[type] > Date.numOfDays[timeSettingValue[4]])
+                        timeSettingValue[type] = Date.numOfDays[timeSettingValue[4]];
                 }
                 break;
         }
@@ -279,7 +281,7 @@ public class TimeKeeping extends Function {
                 return;
             }
         }
-        else if (timeSettingValue[5] > curDate.numOfDays[timeSettingValue[4]]) {
+        else if (timeSettingValue[5] > Date.numOfDays[timeSettingValue[4]]) {
             changeMode(-1);
             return;
         }

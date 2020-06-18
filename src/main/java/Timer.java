@@ -8,9 +8,8 @@ public class Timer extends Function {
 
     final static int FID = 3;
     private final int TYPE_SIZE = 3;
-    private int timeSettingValue[] = {-1, -1, -1};
+    private int[] timeSettingValue = {-1, -1, -1};
     private Time timer;
-    private int type;
     System system;
 
     public Time getTimer() {
@@ -19,7 +18,6 @@ public class Timer extends Function {
 
     public Timer(System system) {
         this.system = system;
-        fid = 3;
         mode = 0;
         timer = new Time(0);
         timer.setTime(0, 0, 0);
@@ -36,8 +34,14 @@ public class Timer extends Function {
                 }
 
                 st = new StringTokenizer(str, " ");
-                if (st.nextToken().equals("0") && st.nextToken().equals("0") && st.nextToken().equals("0")) {
-
+                boolean isZero = true;
+                while (st.hasMoreTokens()) {
+                    if (!st.nextToken().equals("0")) {
+                        isZero = false;
+                        break;
+                    }
+                }
+                if (isZero) {
                     changeMode(0);
                     system.beepBuzzer(1,1);
                     timer.pauseTime();
@@ -60,9 +64,15 @@ public class Timer extends Function {
     public void requestStartTimer() {
         String str = timer.getCurrentTime();
         StringTokenizer st = new StringTokenizer(str, " ");
-        if (st.nextToken().equals("0") && st.nextToken().equals("0") && st.nextToken().equals("0")) {
+        boolean isZero = true;
+        while (st.hasMoreTokens()) {
+            if (!st.nextToken().equals("0")) {
+                isZero = false;
+                break;
+            }
         }
-        else {
+
+        if (!isZero) {
             changeMode(2);
             timer.startTime();
         }
@@ -85,6 +95,7 @@ public class Timer extends Function {
         changeMode(0);
     }
 
+    @Override
     public void changeMode(int mode) {
         this.mode = mode;
         if (this.mode == 0) {

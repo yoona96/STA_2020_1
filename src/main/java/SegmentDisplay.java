@@ -29,6 +29,7 @@ public class SegmentDisplay extends JPanel {
     final static String D = "D.jpg";
     final static String Y = "Y.jpg";
     final static String blank = "blank.jpg";
+    final static String ten = "ten.jpg";
 
     ImageIcon segmentImage;
     JLabel segmentLabel;
@@ -88,6 +89,8 @@ public class SegmentDisplay extends JPanel {
             segmentImage = new ImageIcon(getClass().getResource(D));
         else if (c == 'Y')
             segmentImage = new ImageIcon(getClass().getResource(Y));
+        else if (c == 't')
+            segmentImage = new ImageIcon(getClass().getResource(ten));
         else
             segmentImage = new ImageIcon(getClass().getResource(blank));
 
