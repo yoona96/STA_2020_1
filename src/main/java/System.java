@@ -440,7 +440,7 @@ public class System extends Function {
                         for (int i = 0; i < (3 - (segmentPointer[1] - segmentPointer[0] + 1)) * 6; i++) {
                             str += " ";
                         }
-                        GUI.alarmCustomView.setAlarmList2(str);   // 18�ڸ�
+                        GUI.alarmCustomView.setAlarmList(str);   // 18�ڸ�
                     }
 
                     GUI.alarmCustomView.setBorderPanel(alarmPointer - segmentPointer[0]);
@@ -629,7 +629,7 @@ public class System extends Function {
                         for (int i = 0; i < (3 - (segmentPointer[1] - segmentPointer[0] + 1)) * 6; i++) {
                             str += " ";
                         }
-                        GUI.alarmCustomView.setAlarmList2(str);   // 18�ڸ�
+                        GUI.alarmCustomView.setAlarmList(str);   // 18�ڸ�
                     }
 
                     GUI.alarmCustomView.setBorderPanel(alarmPointer - segmentPointer[0]);
@@ -880,7 +880,7 @@ public class System extends Function {
                     }
 
                     GUI.alarmView.setAlarmList(str[0] + str[1] + str[2]);
-                    GUI.alarmCustomView.setAlarmList2(str[0] + str[1] + str[2]);
+                    GUI.alarmCustomView.setAlarmList(str[0] + str[1] + str[2]);
                 }
                 break;
             case 6: // alarm custom
@@ -1060,7 +1060,7 @@ public class System extends Function {
                     }
 
                     GUI.alarmView.setAlarmList(str[0] + str[1] + str[2]);
-                    GUI.alarmCustomView.setAlarmList2(str[0] + str[1] + str[2]);
+                    GUI.alarmCustomView.setAlarmList(str[0] + str[1] + str[2]);
                 }
                 break;
             case 6: // alarm custom
