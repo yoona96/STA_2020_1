@@ -23,6 +23,7 @@ public class System extends Function {
     private int[] functionNum;
     private int selectedFid;
     private int status; // ��Ʈ����ŷ: 0b00 0b01 0b10 0b11
+    private int type;
     private Thread checkTimeOut;
     private long lastOperateTime;
     private int[] cacheValue;
@@ -410,7 +411,7 @@ public class System extends Function {
                         for (int i = 0; i < (3 - (segmentPointer[1] - segmentPointer[0] + 1)) * 6; i++) {
                             str += " ";
                         }
-                        GUI.alarmView.setAlarmList(str);   // 18�ڸ�
+                        GUI.alarmView.setAlarmList2(str);   // 18�ڸ�
                     }
 
                     GUI.alarmView.setBorderPanel(alarmPointer - segmentPointer[0]);
@@ -440,7 +441,7 @@ public class System extends Function {
                         for (int i = 0; i < (3 - (segmentPointer[1] - segmentPointer[0] + 1)) * 6; i++) {
                             str += " ";
                         }
-                        GUI.alarmCustomView.setAlarmList(str);   // 18�ڸ�
+                        GUI.alarmCustomView.setAlarmList2(str);   // 18�ڸ�
                     }
 
                     GUI.alarmCustomView.setBorderPanel(alarmPointer - segmentPointer[0]);
@@ -580,6 +581,7 @@ public class System extends Function {
                     }
 
                     GUI.alarmView.setAlarm(str1 + str2 + str3);
+                    GUI.alarmView.setAlarmList(alarm.getAlarmList(), alarm.getAlarmPointer(), alarm.getSize());
                 } else if (alarm.getMode() == 2) // ������ ����
                 {
                     alarm.changeValue2(-1);
@@ -588,6 +590,9 @@ public class System extends Function {
                     AlarmData[] alarmList = alarm.getAlarmList();
 
                     if (alarmPointer <= segmentPointer[0]) {    // ���� ��
+                        // ������������ �ش��ϴ� ������ ����ָ� ��.
+//                        java.lang.System.out.println("[" + segmentPointer[0] + ", " + segmentPointer[1] + "]");
+//                        java.lang.System.out.println("alarm pointer: " + alarmPointer);
                         String str = "";
                         for (int i = segmentPointer[0]; i <= segmentPointer[1]; i++) {
                             StringTokenizer st = new StringTokenizer(alarmList[i].getTime().getCurrentTime(), " ");
@@ -599,7 +604,7 @@ public class System extends Function {
                         for (int i = 0; i < (3 - (segmentPointer[1] - segmentPointer[0] + 1)) * 6; i++) {
                             str += " ";
                         }
-                        GUI.alarmView.setAlarmList(str);   // 18�ڸ�
+                        GUI.alarmView.setAlarmList2(str);   // 18�ڸ�
                     }
 
                     GUI.alarmView.setBorderPanel(alarmPointer - segmentPointer[0]);
@@ -609,6 +614,7 @@ public class System extends Function {
                 if (alarmCustom.getMode() == 0) // �˶� ������
                 {
                     alarm.movePointer(-1);
+                    GUI.alarmView.setAlarmList(alarm.getAlarmList(), alarm.getAlarmPointer(), alarm.getSize());
                 }
                 // GUI�� �ݿ��ؾ� ��.
                 else if (alarmCustom.getMode() == 1) {
@@ -618,6 +624,9 @@ public class System extends Function {
                     AlarmData[] alarmList = alarm.getAlarmList();
 
                     if (alarmPointer <= segmentPointer[0]) {    // ���� ��
+                        // ������������ �ش��ϴ� ������ ����ָ� ��.
+//                        java.lang.System.out.println("[" + segmentPointer[0] + ", " + segmentPointer[1] + "]");
+//                        java.lang.System.out.println("alarm pointer: " + alarmPointer);
                         String str = "";
                         for (int i = segmentPointer[0]; i <= segmentPointer[1]; i++) {
                             StringTokenizer st = new StringTokenizer(alarmList[i].getTime().getCurrentTime(), " ");
@@ -629,7 +638,7 @@ public class System extends Function {
                         for (int i = 0; i < (3 - (segmentPointer[1] - segmentPointer[0] + 1)) * 6; i++) {
                             str += " ";
                         }
-                        GUI.alarmCustomView.setAlarmList(str);   // 18�ڸ�
+                        GUI.alarmCustomView.setAlarmList2(str);   // 18�ڸ�
                     }
 
                     GUI.alarmCustomView.setBorderPanel(alarmPointer - segmentPointer[0]);
@@ -879,8 +888,8 @@ public class System extends Function {
                                 String.format("%02d", Integer.parseInt(st.nextToken()));
                     }
 
-                    GUI.alarmView.setAlarmList(str[0] + str[1] + str[2]);
-                    GUI.alarmCustomView.setAlarmList(str[0] + str[1] + str[2]);
+                    GUI.alarmView.setAlarmList2(str[0] + str[1] + str[2]);
+                    GUI.alarmCustomView.setAlarmList2(str[0] + str[1] + str[2]);
                 }
                 break;
             case 6: // alarm custom
@@ -1059,8 +1068,8 @@ public class System extends Function {
                                 String.format("%02d", Integer.parseInt(st.nextToken()));
                     }
 
-                    GUI.alarmView.setAlarmList(str[0] + str[1] + str[2]);
-                    GUI.alarmCustomView.setAlarmList(str[0] + str[1] + str[2]);
+                    GUI.alarmView.setAlarmList2(str[0] + str[1] + str[2]);
+                    GUI.alarmCustomView.setAlarmList2(str[0] + str[1] + str[2]);
                 }
                 break;
             case 6: // alarm custom

@@ -10,6 +10,7 @@ public class D_day extends Function {
     private int dateSettingValue[] = {-1, -1, -1};
 
     public D_day(System system) {
+        fid = 4;
         d_day = -1; //일단 d-day가 없을 시의 수를 -1로 두었습니다.
         d_dayDate = new Date();
         mode = 0;
@@ -19,6 +20,8 @@ public class D_day extends Function {
 
     private int d_day;
     private Date d_dayDate;
+    private int mode;
+    private int type;
     private System system;
 
     public void requestDdaySettingMode() {
@@ -54,7 +57,7 @@ public class D_day extends Function {
                 return;
             }
         }
-        else if (dateSettingValue[2] > Date.numOfDays[dateSettingValue[1]]) {
+        else if (dateSettingValue[2] > d_dayDate.numOfDays[dateSettingValue[1]]) {
             changeMode(-1);
             return;
         }
@@ -116,7 +119,6 @@ public class D_day extends Function {
         type = 0;
     }
 
-    @Override
     public void changeMode(int _mode) {
         mode ^= 1;
         if (mode == 0) {
@@ -171,16 +173,16 @@ public class D_day extends Function {
                     } else
                         tmpNumOfDay = 28;
 
-                    if(dateSettingValue[type] < Date.numOfDays[0])
-                        dateSettingValue[type] = Date.numOfDays[0];
+                    if(dateSettingValue[type] < d_dayDate.numOfDays[0])
+                        dateSettingValue[type] = d_dayDate.numOfDays[0];
                     else if(dateSettingValue[type] > tmpNumOfDay)
                         dateSettingValue[type] = tmpNumOfDay;
                 }
                 else {
-                    if(dateSettingValue[type] < Date.numOfDays[0])
-                        dateSettingValue[type] = Date.numOfDays[0];
-                    else if(dateSettingValue[type] > Date.numOfDays[dateSettingValue[1]])
-                        dateSettingValue[type] = Date.numOfDays[dateSettingValue[1]];
+                    if(dateSettingValue[type] < d_dayDate.numOfDays[0])
+                        dateSettingValue[type] = d_dayDate.numOfDays[0];
+                    else if(dateSettingValue[type] > d_dayDate.numOfDays[dateSettingValue[1]])
+                        dateSettingValue[type] = d_dayDate.numOfDays[dateSettingValue[1]];
                 }
                 break;
         }

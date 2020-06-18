@@ -7,12 +7,15 @@ public class Stopwatch extends Function {
     public final int STOPWATCH_BOTTOM_LIMIT = 0;
 
     private final int TYPE_SIZE = 3;
-    private int[] timeSettingValue = {-1, -1, -1};
+    private int timeSettingValue[] = {-1, -1, -1};
+    private int mode;
     private Time stopwatch;
     private String[] stopwatchRecord;
     private int recordPointer;
+    private int type;
 
     public Stopwatch(System system) {
+        fid = 2;
         mode = 0;
         type = 0;
         stopwatchRecord = new String[10];
@@ -121,12 +124,14 @@ public class Stopwatch extends Function {
         type = 0;
     }
 
-    @Override
     public void changeMode(int mode) {
         this.mode = mode;
 
-        if (this.mode == 0) {
+        if(this.mode == 0) {
             recordPointer = 0;
+        }
+        else {
+
         }
     }
 

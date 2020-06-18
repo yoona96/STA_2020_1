@@ -3,7 +3,7 @@ public abstract class Function {
     public Function() {}
 
     protected int mode;
-    protected int type;
+    protected int fid;
 
     abstract protected void cancel();
     protected void changeMode(int mode) {}
