@@ -235,6 +235,8 @@ public class TimeKeeping extends Function {
                         timeSettingValue[type] = Date.numOfDays[timeSettingValue[4]];
                 }
                 break;
+            default:
+                break;
         }
     }
 

@@ -36,9 +36,9 @@ public class DDayView extends DefaultLayout {
         borderPanel.setBounds(335 - 5, 190 - 5,
                 (D_DATE_WIDTH + 10) / 3, D_DATE_HEIGHT + 10);
 
-        add(datePanel, new Integer(1));
-        add(d_dayPanel, new Integer(1));
-        add(borderPanel, new Integer(2));
+        add(datePanel, Integer.valueOf(1));
+        add(d_dayPanel, Integer.valueOf(1));
+        add(borderPanel, Integer.valueOf(2));
     }
 
     public void setYear(String str) {

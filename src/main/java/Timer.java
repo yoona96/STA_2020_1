@@ -131,6 +131,8 @@ public class Timer extends Function {
                 else if (timeSettingValue[type] > timer.SECOND_TOP_LIMIT)
                     timeSettingValue[type] = timer.SECOND_TOP_LIMIT;
                 break;
+            default:
+                break;
         }
     }
 

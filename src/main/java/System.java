@@ -10,6 +10,8 @@ public class System extends Function {
     // 6�� �� 4�� �ν��Ͻ��� ��������.
     // �˶�, �˶�Ŀ������ �׻� �� �� ���Եǰų� ���Ե��� �ʾƾ� �Ѵ�.
     final static int TIMED_OUT = 600_000;
+    final String BLANK_SIX = "      ";
+    final String DEFAULT_VALUE = "000000";
     public GUI GUI;
     public TimeKeeping timeKeeping;
     public Stopwatch stopwatch;
@@ -127,6 +129,8 @@ public class System extends Function {
                                     GUI.alarmCustomView.borderPanel.setVisible(false);
                                 }
                                 break;
+                            default:
+                                break;
                         }
                         GUI.setView(GUI.timekeepingView);
                         functionNumIdx = 0;
@@ -217,7 +221,7 @@ public class System extends Function {
 
                     GUI.setView(GUI.functionSelectingView);
                     GUI.functionSelectingView.setdDay("   ");
-                    GUI.functionSelectingView.setDate("      ");
+                    GUI.functionSelectingView.setDate(BLANK_SIX);
                     GUI.functionSelectingView.setAlarmNum(" ");
                     GUI.functionSelectingView.setCurTime2("  ");
                     GUI.functionSelectingView.setDayofweek("   ");
@@ -315,7 +319,7 @@ public class System extends Function {
 
                     String[] str = new String[3];
                     if (tmp[0 + curRecordPointer] == null)
-                        str[0] = "      ";
+                        str[0] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[0 + curRecordPointer], " ");
                         str[0] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -323,7 +327,7 @@ public class System extends Function {
                                 String.format("%02d", Integer.parseInt(st.nextToken()));
                     }
                     if (tmp[1 + curRecordPointer] == null)
-                        str[1] = "      ";
+                        str[1] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[1 + curRecordPointer], " ");
                         str[1] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -332,7 +336,7 @@ public class System extends Function {
 
                     }
                     if (tmp[2 + curRecordPointer] == null)
-                        str[2] = "      ";
+                        str[2] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[2 + curRecordPointer], " ");
                         str[2] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -504,7 +508,7 @@ public class System extends Function {
                     String[] str = new String[3];
 
                     if (tmp[0 + curRecordPointer] == null)
-                        str[0] = "      ";
+                        str[0] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[0 + curRecordPointer], " ");
                         str[0] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -512,7 +516,7 @@ public class System extends Function {
                                 String.format("%02d", Integer.parseInt(st.nextToken()));
                     }
                     if (tmp[1 + curRecordPointer] == null)
-                        str[1] = "      ";
+                        str[1] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[1 + curRecordPointer], " ");
                         str[1] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -521,7 +525,7 @@ public class System extends Function {
 
                     }
                     if (tmp[2 + curRecordPointer] == null)
-                        str[2] = "      ";
+                        str[2] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[2 + curRecordPointer], " ");
                         str[2] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -532,7 +536,7 @@ public class System extends Function {
                     GUI.stopwatchView.setStopwatchList(str[0] + str[1] + str[2]);
                 } else {
                     stopwatch.requestResetStopwatch();
-                    GUI.stopwatchView.setStopwatch("000000");
+                    GUI.stopwatchView.setStopwatch(DEFAULT_VALUE);
                     GUI.stopwatchView.setStopwatchList("  NONE  NONE  NONE");
                 }
                 break;
@@ -730,7 +734,7 @@ public class System extends Function {
 
                     String[] str = new String[3];
                     if (tmp[0] == null)
-                        str[0] = "      ";
+                        str[0] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[0], " ");
                         str[0] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -738,7 +742,7 @@ public class System extends Function {
                                 String.format("%02d", Integer.parseInt(st.nextToken()));
                     }
                     if (tmp[1] == null)
-                        str[1] = "      ";
+                        str[1] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[1], " ");
                         str[1] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -747,7 +751,7 @@ public class System extends Function {
 
                     }
                     if (tmp[2] == null)
-                        str[2] = "      ";
+                        str[2] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[2], " ");
                         str[2] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -859,11 +863,11 @@ public class System extends Function {
                     AlarmData[] tmp = alarm.getAlarmList();
 
                     GUI.alarmView.borderPanel.setVisible(false);
-                    GUI.alarmView.setAlarm("000000");
+                    GUI.alarmView.setAlarm(BLANK_SIX);
 
                     String[] str = new String[3];
                     if (tmp[0 + alarmPointer] == null)
-                        str[0] = "      ";
+                        str[0] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[0 + alarmPointer].getTime().getCurrentTime(), " ");
                         str[0] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -871,7 +875,7 @@ public class System extends Function {
                                 String.format("%02d", Integer.parseInt(st.nextToken()));
                     }
                     if (tmp[1 + alarmPointer] == null)
-                        str[1] = "      ";
+                        str[1] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[1 + alarmPointer].getTime().getCurrentTime(), " ");
                         str[1] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -880,7 +884,7 @@ public class System extends Function {
 
                     }
                     if (tmp[2 + alarmPointer] == null)
-                        str[2] = "      ";
+                        str[2] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[2 + alarmPointer].getTime().getCurrentTime(), " ");
                         str[2] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -1041,11 +1045,11 @@ public class System extends Function {
                     AlarmData[] tmp = alarm.getAlarmList();
 
                     GUI.alarmView.borderPanel.setVisible(false);
-                    GUI.alarmView.setAlarm("000000");
+                    GUI.alarmView.setAlarm(BLANK_SIX);
 
                     String[] str = new String[3];
                     if (tmp[0 + alarmPointer] == null)
-                        str[0] = "      ";
+                        str[0] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[0 + alarmPointer].getTime().getCurrentTime(), " ");
                         str[0] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -1053,7 +1057,7 @@ public class System extends Function {
                                 String.format("%02d", Integer.parseInt(st.nextToken()));
                     }
                     if (tmp[1 + alarmPointer] == null)
-                        str[1] = "      ";
+                        str[1] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[1 + alarmPointer].getTime().getCurrentTime(), " ");
                         str[1] = String.format("%02d", Integer.parseInt(st.nextToken())) +
@@ -1062,7 +1066,7 @@ public class System extends Function {
 
                     }
                     if (tmp[2 + alarmPointer] == null)
-                        str[2] = "      ";
+                        str[2] = BLANK_SIX;
                     else {
                         StringTokenizer st = new StringTokenizer(tmp[2 + alarmPointer].getTime().getCurrentTime(), " ");
                         str[2] = String.format("%02d", Integer.parseInt(st.nextToken())) +

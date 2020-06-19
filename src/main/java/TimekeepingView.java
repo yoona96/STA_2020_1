@@ -94,14 +94,14 @@ public class TimekeepingView extends DefaultLayout {
         borderPanel.setBounds(curTimePanel1.getX() - 5, curTimePanel1.getY() - 5,
                 (curTimePanel1.getWidth() + 10) / 2, curTimePanel1.getHeight() + 10);
 
-        add(alarmNumPanel, new Integer(1));
-        add(datePanel, new Integer(1));
-        add(d_dayPanel, new Integer(1));
-        add(curTimePanel1, new Integer(1));
-        add(curTimePanel2, new Integer(1));
-        add(alarmPanel, new Integer(1));
-        add(dayofweekPanel, new Integer(1));
-        add(borderPanel, new Integer(2));
+        add(alarmNumPanel, Integer.valueOf(1));
+        add(datePanel, Integer.valueOf(1));
+        add(d_dayPanel, Integer.valueOf(1));
+        add(curTimePanel1, Integer.valueOf(1));
+        add(curTimePanel2, Integer.valueOf(1));
+        add(alarmPanel, Integer.valueOf(1));
+        add(dayofweekPanel, Integer.valueOf(1));
+        add(borderPanel, Integer.valueOf(2));
     }
 
     public void setAlarmNum(String str) {

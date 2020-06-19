@@ -109,7 +109,7 @@ public class DefaultLayout extends JLayeredPane {
         mainPanel.add(clockLabel);
         mainPanel.setVisible(true);
 
-        add(mainPanel, new Integer(0));
+        add(mainPanel, Integer.valueOf(0));
     }
 
     private static void setBtn(JButton btn) {
@@ -138,7 +138,7 @@ public class DefaultLayout extends JLayeredPane {
         remove(mainPanel);
         mainPanel.remove(isBordered ? clockLabel : clockBorderedLabel);
         mainPanel.add(isBordered ? clockBorderedLabel : clockLabel);
-        add(mainPanel, new Integer(0));
+        add(mainPanel, Integer.valueOf(0));
     }
 
 }

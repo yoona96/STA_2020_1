@@ -8,6 +8,7 @@ public class AlarmView extends DefaultLayout {
     final static int ALARM_LIST_HEIGHT = 135;
     final static int DISPLAY_AMT = 3;
     final String NONE = "  NONE";
+    final String BLANK = "      ";
 
     JPanel curAlarmPanel;
     JPanel alarmListPanel;
@@ -40,9 +41,9 @@ public class AlarmView extends DefaultLayout {
         borderPanel.setBounds(350 - 5, 180 - 5,
                 (ALARM_WIDTH + 10) / 3, ALARM_HEIGHT + 10);
 
-        add(alarmListPanel, new Integer(1));
-        add(curAlarmPanel, new Integer(1));
-        add(borderPanel, new Integer(2));
+        add(alarmListPanel, Integer.valueOf(1));
+        add(curAlarmPanel, Integer.valueOf(1));
+        add(borderPanel, Integer.valueOf(2));
     }
 
     public void setBorderPanel(int idx) {
@@ -58,19 +59,19 @@ public class AlarmView extends DefaultLayout {
     }
 
     public void setAlarmList(String str) {
-        if (str.substring(0, 6).equals("      "))
+        if (str.substring(0, 6).equals(BLANK))
             displaySegment(350, 240, ALARM_WIDTH, ALARM_HEIGHT, NONE, layer++);
         else
             displaySegment(350, 240, ALARM_WIDTH, ALARM_HEIGHT,
                     str.substring(0, 6), layer++);
 
-        if (str.substring(6, 12).equals("      "))
+        if (str.substring(6, 12).equals(BLANK))
             displaySegment(350, 240 + ALARM_HEIGHT, ALARM_WIDTH, ALARM_HEIGHT, NONE, layer++);
         else
             displaySegment(350, 240 + ALARM_HEIGHT, ALARM_WIDTH, ALARM_HEIGHT,
                     str.substring(6, 12), layer++);
 
-        if (str.substring(12, 18).equals("      "))
+        if (str.substring(12, 18).equals(BLANK))
             displaySegment(350, 240 + ALARM_HEIGHT * 2, ALARM_WIDTH, ALARM_HEIGHT, NONE, layer++);
         else
             displaySegment(350, 240 + ALARM_HEIGHT * 2, ALARM_WIDTH, ALARM_HEIGHT,

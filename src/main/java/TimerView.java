@@ -25,8 +25,8 @@ public class TimerView extends DefaultLayout {
         borderPanel.setBounds(timerPanel.getX() - 5, timerPanel.getY() - 5,
                 (timerPanel.getWidth() + 10) / 3, timerPanel.getHeight() + 10);
 
-        add(timerPanel, new Integer(1));
-        add(borderPanel, new Integer(2));
+        add(timerPanel, Integer.valueOf(1));
+        add(borderPanel, Integer.valueOf(2));
     }
 
     public void setHour(String str) {

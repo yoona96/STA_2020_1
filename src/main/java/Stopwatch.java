@@ -152,6 +152,8 @@ public class Stopwatch extends Function {
                 else if (timeSettingValue[type] > stopwatch.SECOND_TOP_LIMIT)
                     timeSettingValue[type] = stopwatch.TIME_BOTTOM_LIMIT;
                 break;
+            default:
+                break;
         }
     }
 
