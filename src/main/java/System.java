@@ -7,8 +7,6 @@ import java.util.StringTokenizer;
  */
 public class System extends Function {
 
-    // 6�� �� 4�� �ν��Ͻ��� ��������.
-    // �˶�, �˶�Ŀ������ �׻� �� �� ���Եǰų� ���Ե��� �ʾƾ� �Ѵ�.
     final static int TIMED_OUT = 600_000;
     final String BLANK_SIX = "      ";
     final String DEFAULT_VALUE = "000000";

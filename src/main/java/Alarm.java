@@ -73,13 +73,7 @@ public class Alarm extends Function {
         alarmList[i] = null;
     }
 
-//    public void requestStopAlarmBuzzer() {
-//        // TODO implement here
-//        system.updateStatus();
-//    }
-
     public void movePointer(int diff) {
-        // TODO implement here
         int size = this.getSize();
 
         if (size == 0)
