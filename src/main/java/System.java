@@ -134,6 +134,7 @@ public class System extends Function {
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                    Thread.currentThread().interrupt();
                 }
             }
         });
@@ -1239,6 +1240,7 @@ public class System extends Function {
             buzzer.getBeepThread().join();
         } catch (InterruptedException e) {
             e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
     }
 

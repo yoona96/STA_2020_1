@@ -91,6 +91,7 @@ public class Timer extends Function {
             timer.getTimeThread().join();
         } catch (InterruptedException e) {
             e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
         changeMode(0);
     }

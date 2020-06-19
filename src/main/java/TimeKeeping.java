@@ -291,6 +291,7 @@ public class TimeKeeping extends Function {
             curTime.getTimeThread().join();
         } catch (InterruptedException e) {
             e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
 
         curTime.setTime(timeSettingValue[0], timeSettingValue[1], timeSettingValue[2]);

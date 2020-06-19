@@ -84,6 +84,7 @@ public class Buzzer implements Runnable {
             beepThread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
         interval = INTERVALS[1];
         volume = VOLUMES[2];
