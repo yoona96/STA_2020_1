@@ -139,6 +139,8 @@ public class AlarmCustom extends Function {
                 if (customSettingValue[type] < VOLUME_BOTTOM_LIMIT)
                     customSettingValue[type] = VOLUME_BOTTOM_LIMIT;
                 break;
+            default:
+                break;
         }
 
     }
@@ -158,9 +160,5 @@ public class AlarmCustom extends Function {
 
     public int[] getCustomSettingValue() {
         return customSettingValue;
-    }
-
-    public void setCustomSettingValue(int[] customSettingValue) {
-        this.customSettingValue = customSettingValue;
     }
 }

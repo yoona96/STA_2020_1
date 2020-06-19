@@ -201,6 +201,8 @@ public class System extends Function {
                     GUI.alarmCustomView.borderPanel.setVisible(false);
                 }
                 break;
+            default:
+                break;
         }
     }
 
@@ -263,6 +265,8 @@ public class System extends Function {
                         alarmCustom.requestAlarmSelectMode();
                     }
                 }
+                break;
+            default:
                 break;
         }
     }
@@ -456,6 +460,8 @@ public class System extends Function {
                 }
 
                 break;
+            default:
+                break;
         }
     }
 
@@ -640,6 +646,8 @@ public class System extends Function {
                     GUI.alarmCustomView.setAlarmInterval(String.valueOf(csvArr[1]));
                     GUI.alarmCustomView.setAlarmVolume(String.valueOf(csvArr[2]));
                 }
+                break;
+            default:
                 break;
         }
 
@@ -889,7 +897,7 @@ public class System extends Function {
                 if (alarmCustom.getMode() == 1) { // �˶� ����Ʈ ��ȸ ���
                     alarmCustom.requestIntervalSettingMode();
                     GUI.alarmCustomView.borderPanel.setBounds(
-                        550, 165, GUI.alarmCustomView._WIDTH, GUI.alarmCustomView._HEIGHT
+                        550, 165, GUI.alarmCustomView.ALARM_WIDTH, GUI.alarmCustomView.ALARM_HEIGHT
                     );
                     GUI.alarmCustomView.setAlarmInterval(Integer.toString(alarmCustom.getCustomSettingValue()[1]));
                     GUI.alarmCustomView.setAlarmVolume(Integer.toString(alarmCustom.getCustomSettingValue()[2]));
@@ -899,17 +907,19 @@ public class System extends Function {
                     if (acType == 2) {  // ����
                         alarmCustom.requestVolumeSettingMode();
                         GUI.alarmCustomView.borderPanel.setBounds(
-                                430, 165, GUI.alarmCustomView._WIDTH, GUI.alarmCustomView._HEIGHT
+                                430, 165, GUI.alarmCustomView.ALARM_WIDTH, GUI.alarmCustomView.ALARM_HEIGHT
                         );
                         GUI.alarmCustomView.setAlarmVolume(Integer.toString(alarmCustom.getCustomSettingValue()[2]));
                     } else if (acType == 1) { // ���͹�
                         alarmCustom.requestIntervalSettingMode();
                         GUI.alarmCustomView.borderPanel.setBounds(
-                                550, 165, GUI.alarmCustomView._WIDTH, GUI.alarmCustomView._HEIGHT
+                                550, 165, GUI.alarmCustomView.ALARM_WIDTH, GUI.alarmCustomView.ALARM_HEIGHT
                         );
                         GUI.alarmCustomView.setAlarmInterval(Integer.toString(alarmCustom.getCustomSettingValue()[1]));
                     }
                 }
+                break;
+            default:
                 break;
         }
 
@@ -1077,6 +1087,8 @@ public class System extends Function {
                 }
 
                 break;
+            default:
+                break;
         }
     }
 
@@ -1194,10 +1206,6 @@ public class System extends Function {
         }
     }
 
-    public void selectFunction() {
-        // TODO implement here
-    }
-
     public void drawTotalBorder() {
         GUI.timekeepingView.setClockDisplay(true);
         GUI.stopwatchView.setClockDisplay(true);
@@ -1292,6 +1300,8 @@ public class System extends Function {
                     break;
                 case 6:
                     GUI.setView(GUI.alarmCustomView);
+                    break;
+                default:
                     break;
             }
         }

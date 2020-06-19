@@ -183,6 +183,8 @@ public class D_day extends Function {
                         dateSettingValue[type] = Date.numOfDays[dateSettingValue[1]];
                 }
                 break;
+            default:
+                break;
         }
     }
 

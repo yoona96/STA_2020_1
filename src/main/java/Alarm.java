@@ -190,6 +190,8 @@ public class Alarm extends Function {
                 else if(alarmSettingValue[type] > curAlarm.getTime().SECOND_TOP_LIMIT)
                     alarmSettingValue[type] = curAlarm.getTime().SECOND_TOP_LIMIT;
                 break;
+            default:
+                break;
 
         }
     }

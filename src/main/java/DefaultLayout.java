@@ -15,7 +15,7 @@ public class DefaultLayout extends JLayeredPane {
     final static String CLOCK_IMG_NAME = "clocklayout.jpg";
     final static String CLOCK_BORDER_IMG_NAME = "clocklayout2.jpg";
 
-    protected static int layer = 3;
+    protected int layer = 3;
     protected JPanel mainPanel;
     System system;
     ImageIcon clockImage;
