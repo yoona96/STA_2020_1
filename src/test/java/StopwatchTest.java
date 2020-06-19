@@ -14,7 +14,7 @@ public class StopwatchTest {
         try {
             Thread.sleep(3100);
         } catch(InterruptedException e) {
-            e.printStackTrace();
+            e.printStackTrace(java.lang.System.out);
         }
 
         Time time = stopwatch.getStopwatch();
@@ -113,7 +113,7 @@ public class StopwatchTest {
                 Thread.sleep(1100);
                 stopwatch.requestSaveRecord();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                e.printStackTrace(java.lang.System.out);
             }
         }
 

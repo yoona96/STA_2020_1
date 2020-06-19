@@ -48,7 +48,7 @@ public class Stopwatch extends Function {
         try {
             stopwatch.getTimeThread().join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            e.printStackTrace(java.lang.System.out);
             Thread.currentThread().interrupt();
         }
         changeMode(0);

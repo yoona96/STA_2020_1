@@ -246,7 +246,7 @@ public class TimeKeeping extends Function {
             java.util.Date date = dateFormat.parse(curDate.getCurrentDate());
             calendar.setTime(date);
         } catch (ParseException e) {
-            e.printStackTrace();
+            e.printStackTrace(java.lang.System.out);
         }
         dayOfTheWeek = calendar.get(Calendar.DAY_OF_WEEK);
     }
@@ -290,7 +290,7 @@ public class TimeKeeping extends Function {
         try {
             curTime.getTimeThread().join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            e.printStackTrace(java.lang.System.out);
             Thread.currentThread().interrupt();
         }
 

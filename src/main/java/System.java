@@ -133,7 +133,7 @@ public class System extends Function {
                         selectedFid = 1;
                     }
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    e.printStackTrace(java.lang.System.out);
                     Thread.currentThread().interrupt();
                 }
             }
@@ -1239,7 +1239,7 @@ public class System extends Function {
             buzzer.stopBuzzer();
             buzzer.getBeepThread().join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            e.printStackTrace(java.lang.System.out);
             Thread.currentThread().interrupt();
         }
     }

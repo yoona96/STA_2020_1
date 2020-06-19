@@ -12,7 +12,7 @@ public class Date {
     public final int MONTH_TOP_LIMIT = 12;
     public final int MONTH_BOTTON_LIMIT = 1;
     // 인덱스 1 ~ 12가 월에 대응하는 일 수. 인덱스 0는 TimeSettingMode일 때 순환적인 처리를 위해 '일'의 최솟값 1을 넣어놨다.
-    public final static int[] numOfDays = {1,31,28,31,30,31,30,31,31,30,31,30,31};
+    protected final static int[] numOfDays = {1,31,28,31,30,31,30,31,31,30,31,30,31};
 
     private int year;
     private int month;

@@ -1,8 +1,7 @@
-
 import javax.sound.sampled.*;
 
 public class Buzzer implements Runnable {
-    public static float SAMPLE_RATE = 8000f;
+    public final static float SAMPLE_RATE = 8000f;
 
     public static void tone(int hz, int msecs, double vol) throws LineUnavailableException {
         byte[] buf = new byte[1];
@@ -28,7 +27,7 @@ public class Buzzer implements Runnable {
     private double volume;
     private Thread beepThread;
     private boolean buzzerState;
-    private Object lock = new Object();
+    private final Object lock = new Object();
 
     public int getInterval() { return this.interval; }
 
@@ -52,7 +51,7 @@ public class Buzzer implements Runnable {
             try {
                 Buzzer.tone(500, interval, volume);
             } catch (LineUnavailableException e) {
-                e.printStackTrace();
+                e.printStackTrace(java.lang.System.out);
             }
         }
     }
@@ -83,7 +82,7 @@ public class Buzzer implements Runnable {
         try {
             beepThread.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            e.printStackTrace(java.lang.System.out);
             Thread.currentThread().interrupt();
         }
         interval = INTERVALS[1];

@@ -176,7 +176,7 @@ class Time implements Runnable {
                     std = cur;
                 }
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                e.printStackTrace(java.lang.System.out);
                 Thread.currentThread().interrupt();
             }
 
