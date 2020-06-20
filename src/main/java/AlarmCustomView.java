@@ -89,7 +89,7 @@ public class AlarmCustomView extends DefaultLayout {
         add(volumeControlPanel, Integer.valueOf(1));
         add(alarmListPanel, Integer.valueOf(1));
         add(volumeImgPanel, Integer.valueOf(1));
-        add(borderPanel, Integer.valueOf(1));
+        add(borderPanel, Integer.valueOf(2));
     }
     public void setAlarmInterval(String str) {
         displaySegment(550, 165, ALARM_WIDTH, ALARM_HEIGHT, str, layer++);

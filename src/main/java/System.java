@@ -51,7 +51,7 @@ public class System extends Function {
         alarmCustom = null;
 
         buzzer = new Buzzer();
-        border = new Border(this);
+        border = new Border();
         cacheValue = new int[4];
         Arrays.fill(cacheValue, -1);
 
@@ -195,12 +195,15 @@ public class System extends Function {
                 if (alarm.getMode() != 0) {
                     alarm.cancel();
                     GUI.alarmView.borderPanel.setVisible(false);
+                    GUI.alarmView.setAlarm("000000");
                 }
                 break;
             case 6:
                 if (alarmCustom.getMode() != 0) {
                     alarmCustom.cancel();
                     GUI.alarmCustomView.borderPanel.setVisible(false);
+                    GUI.alarmCustomView.setAlarmInterval("0");
+                    GUI.alarmCustomView.setAlarmVolume("0");
                 }
                 break;
             default:
@@ -1073,6 +1076,7 @@ public class System extends Function {
                     }
 
                     GUI.alarmView.setAlarmList(str[0] + str[1] + str[2]);
+                    GUI.alarmView.setAlarm("000000");
                     GUI.alarmCustomView.setAlarmList(str[0] + str[1] + str[2]);
                 }
                 break;
@@ -1084,8 +1088,8 @@ public class System extends Function {
                 } else if (alarmCustom.getMode() == 2) {
                     alarmCustom.requestSave();
                     GUI.alarmCustomView.borderPanel.setVisible(false);
-                    GUI.alarmCustomView.setAlarmVolume(" ");
-                    GUI.alarmCustomView.setAlarmInterval(" ");
+                    GUI.alarmCustomView.setAlarmVolume("0");
+                    GUI.alarmCustomView.setAlarmInterval("0");
                 }
 
                 break;
